@@ -1,0 +1,32 @@
+package data_project2;
+public class BST {
+     Node root;
+     public void insert(String val){
+    if (root ==null)
+    {
+        root=new Node(val);
+        return;
+    }
+    Node search =root;
+    while(true){
+    if (val.compareToIgnoreCase(search.data)<0){
+       if(search.left!=null)search =search.left;
+       else 
+       {
+           search.left=new Node(val); 
+           break;
+       }
+    }
+   else if (val.compareToIgnoreCase(search.data)>=0){
+        if(search.right!=null)search =search.right;
+       else 
+       {
+           search.right=new Node(val); 
+           break;
+    }       
+    }
+    else break;
+     } 
+}
+
+}
