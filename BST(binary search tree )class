@@ -1,4 +1,5 @@
 package data_project2;
+import java.util.Queue;
 public class BST {
      Node root;
      public void insert(String val){
@@ -27,6 +28,207 @@ public class BST {
     }
     else break;
      } 
-}
-
+}   
+ int size = 0;
+    public void add(String data , Node node){    
+      if (data.compareTo(node.data)>=0){
+         
+          if (node.right == null){
+              node.right=new Node(data);
+              return;
+          }
+         add(data , node.right);
+      }    
+      
+      if (data.compareTo(node.data)<0){
+          
+          
+          if(node.left==null){
+             node.left=new Node(data);
+             return;
+          }
+          
+          add(data,node.left);
+      }
+        
+    }
+    public void add(String data){
+        
+     if (root == null)   
+         root = new Node(data);
+     else
+         add(data,root);
+         size++;
+        
+    }
+    public void searchAndAddTheWord(String data , Node node){
+    
+        if (node == null){
+            add(data);
+        }
+        search(data,node);   
+        if (node.right == null && node.left == null)
+            add(data);
+        
+        if(node.right == null && data.compareTo(node.data) > 0)
+            add(data);
+        
+         if(node.left == null && data.compareTo(node.data) < 0)
+            add(data);
+    }
+    public Node search(String data , Node node){
+        
+        if (node == null)
+            return null;
+        if (data.compareTo(node.data)==0)
+            return node;
+        if (data.compareTo(node.data)>0)
+            return search(data,node.right);
+      
+        
+            return search(data,node.left);
+       
+    }
+    
+    
+    public int height(Node node){
+        
+        if (node == null)
+            return -1;
+        
+        else {
+            
+            int leftOfTheRoot = height(node.left);
+            int rightOfTheRoot = height (node.right);
+             
+        if (leftOfTheRoot > rightOfTheRoot ){     
+        return (leftOfTheRoot+1);
+        }
+        else
+            return (rightOfTheRoot+1);
+        }
+                
+    }
+    
+  
+     
+     public Node getSuccessor(Node node , String data){
+         
+       Node temp ;  
+      Node current = search(data,root);   
+          
+      if (current == null)
+          return null;
+      
+      if (current.right != null)
+      {
+          temp = current.right;
+      
+      while(temp.left != null){
+       temp = temp.left;   
+      }
+        return temp;
+      }  
+        
+      else{
+          
+       Node successor = null;   
+       Node ancestor = root;
+       
+       while (ancestor != current )
+       {
+        if (current.data.compareTo(ancestor.data) < 0 )   
+        {
+         successor = ancestor;   
+         ancestor = ancestor.left;
+        }
+        else
+        {
+         ancestor = ancestor.right;   
+        }
+           
+       }
+          
+       return successor;   
+      }
+         
+     }
+     public Node getPredcessor(Node node , String data){
+      Node temp ;  
+      Node current = search(data,root);            
+      if (current == null)
+          return null;
+      
+      if (current.left != null)
+      {
+          temp = current.left;
+      
+      while(temp.right != null){
+       temp = temp.right;   
+      }
+        return temp;
+      }    
+      else{
+          Node predcessor = null;
+          Node ancestor = root;          
+          while (ancestor != current)
+          {
+           if (current.data.compareTo(ancestor.data)> 0)   
+           {
+            predcessor = ancestor;   
+            ancestor = ancestor.right;
+           }
+           else    
+           {
+              ancestor = ancestor.left;
+           }          
+          }
+            return predcessor;     
+      }
+     }
+     public void BFS(Node root){
+         
+         if (root == null)
+             return;
+            
+            Queue <Node> q = null;   
+            q.add(root);
+            
+            while(!q.isEmpty()){
+                
+             Node current = q.peek();
+             System.out.println(current.data);
+             if (current.left != null)
+                 q.add(current.left);
+             if (current.right != null)
+                 q.add(current.right);
+             
+             q.remove();       
+            }
+ 
+        }
+     public void preOrder(Node node){
+         
+      if (node == null)   
+          return;
+         
+      System.out.println(node.data);
+      preOrder(node.left);
+      preOrder(node.right); 
+     }
+     public void inOrder(Node node){        
+      if (node == null)   
+          return;
+      inOrder(node.left);
+      System.out.println(node.data);
+      inOrder(node.right);  
+     }   
+      public void postOrder(Node node){                 
+      if (node == null)   
+          return;
+      postOrder(node.left);
+      postOrder(node.right);
+      System.out.println(node.data);  
+     }
+    
 }
