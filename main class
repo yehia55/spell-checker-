@@ -12,7 +12,8 @@ public class Data_project2 {
 ,"exorableness","underworker","spinach-dock","turbid","ten-mile","triglandular","unperjured","twaddling","drainage-pipe","still-burn","reticule","paradenitis","zygadenine"};
         BST BST =new BST ();
 for(int i=0;i<dic.length;i++){
-BST.insert(dic[i]);       
-} 
+BST.add(dic[i]);       
 }
+BST.se(BST.root,"firstling");
+    }
 }
