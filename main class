@@ -14,6 +14,6 @@ public class Data_project2 {
 for(int i=0;i<dic.length;i++){
 BST.add(dic[i]);       
 }
-BST.se(BST.root,"firstling");
+BST.se(BST.root,"first");
     }
 }
