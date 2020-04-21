@@ -217,10 +217,13 @@ public class BST {
         search(root.left,key);
        }
        else if (key.compareToIgnoreCase(root.data)>0)  
-        search(root.right,key);             
+        search(root.right,key); 
+       else 
+           Search =root;
  if (!is){
      add(key);
  }
 }
 }
+
 
