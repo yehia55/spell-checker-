@@ -66,34 +66,6 @@ public class BST {
          size++;
         
     }
-    public void searchAndAddTheWord(String data , Node node){
-    
-        if (node == null){
-            add(data);
-        }
-        search(data,node);   
-        if (node.right == null && node.left == null)
-            add(data);
-        
-        if(node.right == null && data.compareTo(node.data) > 0)
-            add(data);
-        
-         if(node.left == null && data.compareTo(node.data) < 0)
-            add(data);
-    }
-    public Node search(String data , Node node ){
-        
-        if (node == null)
-            return null;
-        if (data.compareTo(node.data)==0)
-            return node;
-        if (data.compareTo(node.data)>0)
-            return search(data,node.right);
-      
-        
-            return search(data,node.left);
-       
-    }
     public int  height(Node node){
         
         if (node == null)
@@ -114,7 +86,7 @@ public class BST {
     }
     public Node getSuccessor(Node node , String data){
        Node temp ;  
-      Node current = search(data,root);   
+      Node current = search(root,data);   
           
       if (current == null)
           return null;
@@ -155,7 +127,7 @@ public class BST {
     }
     public Node getPredcessor(Node node , String data){
       Node temp ;  
-      Node current = search(data,root);            
+      Node current = search(root,data);            
       if (current == null)
           return null;
       
@@ -230,21 +202,24 @@ public class BST {
       postOrder(node.right);
       System.out.println(node.data);  
      }
-    public void se(Node root,String key){
+    public Node search(Node root,String key){
         if (root==null){
-       System.out.println("not found");
        is =false;
+            return root;
 }
         else if (key.compareToIgnoreCase(root.data)==0){
         System.out.println("found");
         is =true;
         }
-       else if (key.compareToIgnoreCase(root.data)>0){
-        se(root.left,key);
+       else if (key.compareToIgnoreCase(root.data)<0){
+        search(root.left,key);
        }
-       else if (key.compareToIgnoreCase(root.data)<0)  
-        se(root.right,key);             
- if (!is)
+       else if (key.compareToIgnoreCase(root.data)>0)  
+        search(root.right,key);             
+ if (!is){
      add(key);
+     return root;
+ }
+ return root;
 }
 }
