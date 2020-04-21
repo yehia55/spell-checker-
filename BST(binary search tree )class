@@ -1,8 +1,8 @@
 package data_project2;
 import java.util.Queue;
 public class BST {
-    static boolean is=true;
-
+    static boolean is;
+    static Node Search;
      Node root;
      public BST(){
      root=null;
@@ -86,7 +86,7 @@ public class BST {
     }
     public Node getSuccessor(Node node , String data){
        Node temp ;  
-      Node current = search(root,data);   
+      Node current = Search;   
           
       if (current == null)
           return null;
@@ -127,7 +127,7 @@ public class BST {
     }
     public Node getPredcessor(Node node , String data){
       Node temp ;  
-      Node current = search(root,data);            
+      Node current = Search;            
       if (current == null)
           return null;
       
@@ -202,10 +202,12 @@ public class BST {
       postOrder(node.right);
       System.out.println(node.data);  
      }
-    public Node search(Node root,String key){
+    public void search(Node root,String key){
         if (root==null){
+            System.out.println("not found");
        is =false;
-            return root;
+       Search=root;
+       return;
 }
         else if (key.compareToIgnoreCase(root.data)==0){
         System.out.println("found");
@@ -218,8 +220,7 @@ public class BST {
         search(root.right,key);             
  if (!is){
      add(key);
-     return root;
  }
- return root;
 }
 }
+
