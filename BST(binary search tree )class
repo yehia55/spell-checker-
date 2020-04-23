@@ -1,72 +1,140 @@
-package data_project2;
+package projectdata;
+
+
+
+import java.util.LinkedList;
 import java.util.Queue;
+
+
 public class BST {
-    static boolean is;
-    static Node Search;
-     Node root;
-     public BST(){
-     root=null;
-     }
-     int size = 0;
-    public void insert(String val){
-    if (root ==null)
-    {
-        root=new Node(val);
-        return;
-    }
-    Node search =root;
-    while(true){
-    if (val.compareTo(search.data)<0){
-       if(search.left!=null)search =search.left;
-       else 
-       {
-           search.left=new Node(val); 
-           break;
-       }
-    }
-   else if (val.compareTo(search.data)>=0){
-        if(search.right!=null)search =search.right;
-       else 
-       {
-           search.right=new Node(val); 
-           break;
-    }       
-    }
-    else break;
-     } 
-}   
-    public void add(String data , Node node){    
-      if (data.compareTo(node.data)>=0){
+    
+    String s;
+static  String succ,pred;     
+ int size = 0;
+ Node root;
+ String n;
+ Node x;
+
+  static String m  ;
+    public void add(String data , Node node){
+        
+       
+     
+      if (data.compareTo(node.data)>0){
          
           if (node.right == null){
+               
               node.right=new Node(data);
+             
               return;
           }
+         
          add(data , node.right);
+         
       }    
       
-      if (data.compareTo(node.data)<0){
+   else  if (data.compareTo(node.data)<0){
           
           
           if(node.left==null){
              node.left=new Node(data);
+             
              return;
           }
           
           add(data,node.left);
+        
       }
         
     }
     public void add(String data){
+             
         
-     if (root == null)   
+     if (root == null){   
          root = new Node(data);
-     else
-         add(data,root);
-         size++;
         
+     }else   {       
+         add(data,root);
+     }
+     
+        size++;
     }
-    public int  height(Node node){
+
+
+    
+    
+    
+    
+        public String searchAndInsert(String data , Node node){
+        
+                      
+        if (data.compareTo(node.data)==0){
+          System.out.println("The word  " +data+ " is Found");
+           return node.data;
+        }
+        else  if (data.compareTo(node.data)>0&& node.right != null ){
+                
+             searchAndInsert(data,node.right);
+           
+        } 
+       else if (data.compareTo(node.data)<0&& node.left != null ){
+           
+             searchAndInsert(data,node.left);   
+       }
+
+       else  // if ((node.right == null && node.left == null )|| (node.left == null && data.compareTo(node.data) < 0) || ( node.right == null  && data.compareTo(node.data) > 0))            
+              
+        {        
+
+            m = node.data;   
+            System.out.println("the word "+data+ " isnot found");
+            System.out.println("Do You Mean  "+m);
+            SuccandPred(root,m);
+            System.out.println("Successor  "+succ);
+            System.out.println("Predcessor  "+pred);
+            System.out.println("the word has been added");
+            System.out.println("--------------------------");
+            add(data);     
+        }                 
+     return m;  
+    }
+        
+        
+        
+        public void SuccandPred(Node node, String data) {
+		if (node != null) {
+			if (node.data.compareTo(data)==0) {
+				
+				if (node.left != null) {
+					Node z = node.left;
+					while (z.right != null) {
+						z = z.right;
+					}
+					pred = z.data;
+				}
+				if (node.right != null) {
+				
+					Node y = node.right;
+					while (y.left != null) {
+						y = y.left;
+				}
+                           	succ = y.data;
+	                     	}
+                         	} else if (node.data.compareTo(data)>0) {
+				
+				succ = node.data;
+				SuccandPred(node.left, data);
+		         	} else if (node.data.compareTo(data)<0) {
+		 		
+				pred = node.data;
+				SuccandPred(node.right, data);
+			}
+		}
+	}
+
+
+    
+    public int height(Node node){
         
         if (node == null)
             return -1;
@@ -84,88 +152,16 @@ public class BST {
         }
                 
     }
-    public Node getSuccessor(Node node , String data){
-       Node temp ;  
-      Node current = Search;   
-          
-      if (current == null)
-          return null;
-      
-      if (current.right != null)
-      {
-          temp = current.right;
-      
-      while(temp.left != null){
-       temp = temp.left;   
-      }
-        return temp;
-      }  
-        
-      else{
-          
-       Node successor = null;   
-       Node ancestor = root;
-       
-       while (ancestor != current )
-       {
-        if (current.data.compareTo(ancestor.data) < 0 )   
-        {
-         successor = ancestor;   
-         ancestor = ancestor.left;
-        }
-        else
-        {
-         ancestor = ancestor.right;   
-        }
-           
-       }
-        
-       return successor;   
-      }
-           
-     
-    }
-    public Node getPredcessor(Node node , String data){
-      Node temp ;  
-      Node current = Search;            
-      if (current == null)
-          return null;
-      
-      if (current.left != null)
-      {
-          temp = current.left;
-      
-      while(temp.right != null){
-       temp = temp.right;   
-      }
-        return temp;
-      }    
-      else{
-          Node predcessor = null;
-          Node ancestor = root;          
-          while (ancestor != current)
-          {
-           if (current.data.compareTo(ancestor.data)> 0)   
-           {
-            predcessor = ancestor;   
-            ancestor = ancestor.right;
-           }
-           else    
-           {
-              ancestor = ancestor.left;
-           }          
-          }
-            return predcessor;     
-      }
-     }
-    public void BFS(Node root){
+
+     public void BFS(Node node){
          
-         if (root == null)
+         if (node == null)
              return;
             
-            Queue <Node> q = null;   
-            q.add(root);
-            
+         
+         Queue <Node> q = new LinkedList<>();
+         q.add(node);
+        
             while(!q.isEmpty()){
                 
              Node current = q.peek();
@@ -175,55 +171,47 @@ public class BST {
              if (current.right != null)
                  q.add(current.right);
              
-             q.remove();       
+             q.remove();
+                
+                
             }
  
         }
-    public void preOrder(Node node){
+     
+     
+     public void preOrder(Node node){
          
       if (node == null)   
           return;
          
       System.out.println(node.data);
       preOrder(node.left);
-      preOrder(node.right); 
+      preOrder(node.right);
+        
      }
-    public void inOrder(Node node){        
+     
+     public void inOrder(Node node){
+         
       if (node == null)   
           return;
+         
+      
       inOrder(node.left);
       System.out.println(node.data);
-      inOrder(node.right);  
-     }   
-    public void postOrder(Node node){                 
+      inOrder(node.right);
+        
+     }
+          
+      public void postOrder(Node node){
+                      
       if (node == null)   
           return;
+        
       postOrder(node.left);
       postOrder(node.right);
       System.out.println(node.data);  
      }
-    public void search(Node root,String key){
-        if (root==null){
-            System.out.println("not found");
-       is =false;
-       Search=root;
-       return;
-}
-        else if (key.compareToIgnoreCase(root.data)==0){
-        System.out.println("found");
-        is =true;
-        }
-       else if (key.compareToIgnoreCase(root.data)<0){
-        search(root.left,key);
-       }
-       else if (key.compareToIgnoreCase(root.data)>0)  
-        search(root.right,key); 
-       else 
-           Search =root;
- if (!is){
-     add(key);
- }
-}
+
 }
 
 
